@@ -42,6 +42,7 @@ class Tool(object):
             self.post_process(files)
         else:
             log.debug('No matching files for %s', self.name)
+        return self.problems
 
     def execute_commits(self, commits):
         """
@@ -209,5 +210,8 @@ def run(config, problems, files, commits, base_path):
     log.info('Running lint tools on %s', files)
     for tool in lint_tools:
         log.debug('Runnning %s', tool)
-        tool.execute(files)
+        tool_problems = tool.execute(files)
+        problems.add_many(tool_problems)
         tool.execute_commits(commits)
+
+    return problems

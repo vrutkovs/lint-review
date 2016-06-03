@@ -41,14 +41,14 @@ class Processor(object):
             append_base=self._target_path,
             ignore_patterns=review_config.ignore_patterns())
         commits_to_check = self._pull_request.commits()
-        log.debug("_problems before tools: %s" % self._problems)
-        tools.run(
+        log.debug("_problems before tools: %s" % len(self._problems))
+        self._problems = tools.run(
             review_config,
             self._problems,
             files_to_check,
             commits_to_check,
             self._target_path)
-        log.debug("_problems after tools: %s" % self._problems)
+        log.debug("_problems after tools: %s" % len(self._problems))
 
 
     def publish(self):
