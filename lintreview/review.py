@@ -125,11 +125,16 @@ class Review(object):
 
         self.load_comments()
         total_problem_count = len(problems)
+        log.debug("problems: %s" % problems)
+        log.debug("total_problem_count: %s" % total_problem_count)
         self.remove_existing(problems)
+        log.debug("removed existing problems : %s" % problems)
 
         new_problem_count = len(problems)
+        log.debug("new_problem_count: %s" % new_problem_count)
         under_threshold = (summary_threshold is None or
                            new_problem_count < summary_threshold)
+        log.debug("under_threshold: %s" % under_threshold)
 
         if under_threshold:
             self.publish_problems(problems, head_sha)
